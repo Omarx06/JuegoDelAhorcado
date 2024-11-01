@@ -9,7 +9,6 @@ public class Frases {
             "La practica hace al maestro",
             "Aprender es crecer continuamente",
             "El tiempo es el recurso mas valioso",
-            "Los sueños impulsan el futuro",
             "Trabajar en equipo trae grandes resultados",
             "El respeto es la base de toda relacion",
             "La perseverancia vence cualquier obstaculo",
