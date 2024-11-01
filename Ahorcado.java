@@ -29,13 +29,18 @@ public class Ahorcado {
             listaJugadores.add(nombre); // Añadir a la lista de jugadores
         }
 
+        // Variable para almacenar al ganador
+        String ganador = null;
+
         // Bucle del juego por rondas
-        while (!hayGanador(puntosParaGanar)) {
+        while (ganador == null) { // Mientras no haya ganador
             iniciarRonda();
             jugarRonda(scanner);
+            ganador = hayGanador(puntosParaGanar); // Verifica si hay un ganador después de cada ronda
         }
 
-        System.out.println("¡El juego ha terminado!");
+        // Anunciar al ganador
+        System.out.println("¡El juego ha terminado! El ganador es: " + ganador);
     }
 
     // Función para iniciar una nueva ronda
@@ -77,6 +82,7 @@ public class Ahorcado {
                 if (letrasUsadas.contains(letra)) {
                     System.out.println("Esa letra ya fue usada.");
                     sumarPuntos(jugador, -3); // Penalización por repetir letra
+                    sigueTurno = false; // Termina el turno del jugador si repite letra
                 } else {
                     letrasUsadas.add(letra); // Marcar la letra como usada
                     if (fraseActual.toLowerCase().contains(String.valueOf(letra))) {
@@ -96,7 +102,7 @@ public class Ahorcado {
                     } else {
                         System.out.println("La letra no está en la frase.");
                         sumarPuntos(jugador, -1); // Penalización por letra incorrecta
-                        sigueTurno = false; // Pasar al siguiente jugador
+                        sigueTurno = false; // Termina el turno si falla
                     }
                 }
             }
@@ -139,13 +145,13 @@ public class Ahorcado {
         }
     }
 
-    // Función para verificar si hay un ganador
-    private static boolean hayGanador(int puntosParaGanar) {
-        for (int puntos : jugadores.values()) {
-            if (puntos >= puntosParaGanar) {
-                return true;
+    // Función para verificar si hay un ganador y retornar su nombre si lo hay
+    private static String hayGanador(int puntosParaGanar) {
+        for (Map.Entry<String, Integer> entry : jugadores.entrySet()) {
+            if (entry.getValue() >= puntosParaGanar) {
+                return entry.getKey(); // Retorna el nombre del jugador ganador
             }
         }
-        return false;
+        return null; // Si no hay ganador, retorna null
     }
 }
